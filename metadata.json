@@ -1,0 +1,6 @@
+{
+  "name": "Pahadi Ride",
+  "description": "A mountain ride-sharing app specifically designed for the terrains of Himachal Pradesh.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": []
+}

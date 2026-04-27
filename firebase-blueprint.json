@@ -1,0 +1,82 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["passenger", "rider"] },
+        "vehicleNumber": { "type": "string" },
+        "vehicleType": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "PaymentMethod": {
+      "title": "Payment Method",
+      "description": "User saved credit/debit card (simulated/tokenized)",
+      "type": "object",
+      "properties": {
+        "cardId": { "type": "string" },
+        "last4": { "type": "string" },
+        "brand": { "type": "string" },
+        "expiry": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["cardId", "last4", "brand", "expiry"]
+    },
+    "Ride": {
+      "title": "Ride",
+      "description": "Information about a ride booking",
+      "type": "object",
+      "properties": {
+        "rideId": { "type": "string" },
+        "userId": { "type": "string" },
+        "pickup": { "type": "object" },
+        "destination": { "type": "object" },
+        "distance": { "type": "number" },
+        "price": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "active", "completed", "cancelled"] },
+        "rideType": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["rideId", "userId", "pickup", "destination", "price", "status"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Payment history record",
+      "type": "object",
+      "properties": {
+        "transactionId": { "type": "string" },
+        "userId": { "type": "string" },
+        "rideId": { "type": "string" },
+        "amount": { "type": "number" },
+        "status": { "type": "string", "enum": ["success", "failed"] },
+        "cardLast4": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["transactionId", "userId", "amount", "status"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "Public and private user profile data"
+    },
+    "users/{userId}/paymentMethods/{cardId}": {
+      "schema": "PaymentMethod",
+      "description": "Saved cards for a user"
+    },
+    "rides/{rideId}": {
+      "schema": "Ride",
+      "description": "Historical and current ride records"
+    },
+    "transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Financial transaction history"
+    }
+  }
+}
